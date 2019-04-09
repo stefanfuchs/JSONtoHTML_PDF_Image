@@ -1,0 +1,17 @@
+{
+  "name": "htmltoimage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luciano Urgal Pando",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "html-pdf": "^2.2.0",
+    "pdf-image": "^2.0.0",
+    "xmlhttprequest": "^1.8.0"
+  }
+}

@@ -1,0 +1,99 @@
+let fs = require('fs');
+let pdf = require('html-pdf');
+
+const generateHtmlCode = (obj, number) => {
+  // Foto, Bairro, nome, código, quartos, vagas estac, area, veja mais
+  // foto.url, dadosImoveis.bairro, dadosImoveis.endereco, referencia, qtdeDormitorios, qtdeGaragem, metragem
+  let refs = "refs";
+  let code = `<head> <style>
+  .imagem { width: 60%; overflow: hide; display: inline-block; margin-left: 5%; margin-top: 30px }
+  img { max-width: 100%; max-height: 100% }
+  .texto { width: 25%; display: inline-block; margin-left: 5% }
+  </style> </head>` +  
+  "<div>";
+  for(let x=0;x<number;x++) {
+    code = code + `<div> 
+    <div class="imagem"><img src="`+obj.conteudo[x].foto.url+`" alt="`+obj.conteudo[x].descricao+`" /></div>
+    <div class="texto"><h1>`+obj.conteudo[x].dadosImoveis.bairro+`</h1>
+    `+ (obj.conteudo[x].dadosImoveis.Endereco ? "<p>"+obj.conteudo[x].dadosImoveis.Endereco+"</p>" : "") +`
+    <h3>Referência: `+obj.conteudo[x].referencia+`</h3>
+
+    `+  bedLine(obj.conteudo[x].qtdeDormitorios)+` 
+    ` + carLine(obj.conteudo[x].qtdeGaragem) + //+ (obj.conteudo[x].qtdeGaragem ? "<h3>"+ obj.conteudo[x].qtdeGaragem +" vaga(s)</h3>" : "") +
+     areaLine(obj.conteudo[x].metragem+1) +   // + (obj.conteudo[x].metragem>0 ? "<h3>"+ obj.conteudo[x].metragem +" m^2 privativos</h3>" : "") +  
+    '<h2><a href="https://www.apolar.com.br/imoveis/'+obj.conteudo[x].referencia+'">Veja mais!</a></h2> </div>'+
+    '</div>\n';
+    refs = refs + " " + obj.conteudo[x].referencia;
+  }
+
+  code = code + "</div>";
+  writeTextFile("files/"+refs+".html", code);
+  return refs+".html";
+}
+
+const areaLine = (numb) => {
+  return numb ? 
+  `<span style="font-family:'Segoe UI Symbol';color:black;font-size:1.5em;">&#x1f539; `+ numb +" m^2 privativos</span><br>"
+  : "";
+}
+
+const bedLine = (numb) => {
+  const center = numb>1 ?
+  numb+" dormitórios" :
+  "1 dormitório";
+  return `<span style="font-family:'Segoe UI Symbol';color:black;font-size:1.5em;">&#x1f3a6; ` + center + "</span><br>";
+}
+
+const carLine = (numb) => {
+  return numb ? `<span style="font-family:'Segoe UI Symbol';color:black;font-size:1.5em;">
+  &#x1F698; `+ numb + " " + (numb>1 ? "vagas" : "vaga") + ` 
+  </span><br>` : "";
+  //" " + (numb>1 ? "vagas" : "vaga")
+}
+
+const writeTextFile = (afilename, output) => {
+  fs.writeFileSync(afilename, output);
+}
+
+const createPdf = (html, options, fileName) => {
+  pdf.create(html, options).toFile('./files/'+fileName+'.pdf', function(err, res) {
+    if (err) return console.log(err);
+    console.log("OK: " + res.filename + " created!");
+    return res.filename;
+  });
+}
+
+const htmlToPdf = (fileName) => {
+  let html = fs.readFileSync('files/'+fileName, 'utf8');
+  let options = { format: 'Letter' };
+  return createPdf(html, options, fileName);
+}
+
+const pdfToImage = (filename) => {
+let PDFImage = require("pdf-image").PDFImage;
+
+let pdfImage = new PDFImage("/files/"+filename);
+pdfImage.convertFile().then(function (imagePaths) {
+  fs.writeFileSync(filename, pdfImage);
+});
+}
+
+const useLocalJson = () => {
+// generates HTML using JSON file
+const data = JSON.parse(fs.readFileSync("./exemplo_imoveis_apolar.json", "utf-8"));
+const fileName = generateHtmlCode(data,2);
+// uses generated HTML file to generate PDF file
+htmlToPdf(fileName);
+pdfToImage(fileName+".pdf");
+}
+
+const useRemoteJson = (jsonFile) => {
+// generates HTML using JSON file
+const fileName = generateHtmlCode(JSON.parse(jsonFile),2);
+// uses generated HTML file to generate PDF file
+return htmlToPdf(fileName);
+}
+
+// Test function
+useLocalJson();
+
