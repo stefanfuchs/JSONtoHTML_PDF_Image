@@ -75,8 +75,24 @@ const htmlToPdf = (fileName) => {
   return createPdf(html, options, fileName);
 }
 
-const pdfToImage = (filename) => {
+const htmlToImage = (filename) => {
  
+  const puppeteer = require('puppeteer');
+  const add = './files/'+filename;
+
+  (async () => {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+   
+    var contentHtml = fs.readFileSync(add, 'utf8');
+    await page. setContent(contentHtml);   
+    //await page.goto(filename);
+    await page.screenshot({path: add + '.png'});
+  
+    await browser.close();
+  })().then(() => console.log("OK: " + add + ".png created!"))
+  .catch(e => console.log(e));
+  return add+".png";
 }
 
 const useLocalJson = () => {
@@ -87,7 +103,7 @@ const data = JSON.parse(fs.readFileSync("./exemplo_imoveis_apolar.json", "utf-8"
 const fileName = generateHtmlCode(data,2);
 // uses generated HTML file to generate PDF file
 htmlToPdf(fileName);
-pdfToImage(fileName+".pdf");
+htmlToImage(fileName);
 }
 
 const useRemoteJson = (jsonFile) => {
@@ -96,7 +112,8 @@ ensureDirSync("files");
 // generates HTML using JSON file
 const fileName = generateHtmlCode(JSON.parse(jsonFile),2);
 // uses generated HTML file to generate PDF file
-return htmlToPdf(fileName);
+htmlToPdf(fileName);
+return htmlToImage(fileName);
 }
 
 // Test function

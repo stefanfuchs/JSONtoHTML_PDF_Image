@@ -12,6 +12,8 @@
     "express": "^4.16.4",
     "html-pdf": "^2.2.0",
     "mkdirp": "^0.5.1",
+    "phantomjs": "^2.1.7",
+    "puppeteer": "^1.14.0",
     "xmlhttprequest": "^1.8.0"
   }
 }
