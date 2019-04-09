@@ -11,7 +11,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "html-pdf": "^2.2.0",
-    "pdf-image": "^2.0.0",
+    "mkdirp": "^0.5.1",
     "xmlhttprequest": "^1.8.0"
   }
 }

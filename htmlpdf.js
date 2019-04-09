@@ -27,8 +27,18 @@ const generateHtmlCode = (obj, number) => {
   }
 
   code = code + "</div>";
-  writeTextFile("files/"+refs+".html", code);
-  return refs+".html";
+  refs = refs +".html";
+  fs.writeFileSync("files/"+refs, code);
+  console.log("OK: " + refs + " created!");
+  return refs;
+}
+
+const ensureDirSync = (dir) => {
+  try {
+    fs.mkdirSync(dir, { recursive: true })
+  } catch (err) {
+    if (err.code !== 'EEXIST') throw err
+  }
 }
 
 const areaLine = (numb) => {
@@ -51,10 +61,6 @@ const carLine = (numb) => {
   //" " + (numb>1 ? "vagas" : "vaga")
 }
 
-const writeTextFile = (afilename, output) => {
-  fs.writeFileSync(afilename, output);
-}
-
 const createPdf = (html, options, fileName) => {
   pdf.create(html, options).toFile('./files/'+fileName+'.pdf', function(err, res) {
     if (err) return console.log(err);
@@ -70,15 +76,12 @@ const htmlToPdf = (fileName) => {
 }
 
 const pdfToImage = (filename) => {
-let PDFImage = require("pdf-image").PDFImage;
-
-let pdfImage = new PDFImage("/files/"+filename);
-pdfImage.convertFile().then(function (imagePaths) {
-  fs.writeFileSync(filename, pdfImage);
-});
+ 
 }
 
 const useLocalJson = () => {
+// ensure dir
+ensureDirSync("files");
 // generates HTML using JSON file
 const data = JSON.parse(fs.readFileSync("./exemplo_imoveis_apolar.json", "utf-8"));
 const fileName = generateHtmlCode(data,2);
@@ -88,6 +91,8 @@ pdfToImage(fileName+".pdf");
 }
 
 const useRemoteJson = (jsonFile) => {
+// ensure dir
+ensureDirSync("files");
 // generates HTML using JSON file
 const fileName = generateHtmlCode(JSON.parse(jsonFile),2);
 // uses generated HTML file to generate PDF file
@@ -96,4 +101,6 @@ return htmlToPdf(fileName);
 
 // Test function
 useLocalJson();
+
+module.exports = useRemoteJson;
 

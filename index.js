@@ -1,10 +1,11 @@
 let express = require('express');
 let app = express();
-//let code = require('htmlpdf');
+let useRemoteJson = require('./htmlpdf.js');
 
 app.get('/', function (req, res) {
-  //const filename = code.useRemoteJson(req.json);
-  res.send('Hello World!'); //res.send(filename);
+  const filename = useRemoteJson(req.json);
+  //res.send('Hello World!'); 
+  res.send(filename);
 });
 
 app.listen(3006, function () {
