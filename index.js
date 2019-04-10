@@ -1,6 +1,6 @@
 let express = require('express');
 let app = express();
-let code = require('./htmlpdf.js');
+let code = require('./JSONtoPNG.js');
 
 app.get('/', function (req, res) {
   const filename = code.useRemoteJson(req.json);
