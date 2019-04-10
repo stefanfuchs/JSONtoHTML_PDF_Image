@@ -5,13 +5,16 @@ export default class JSONtoPNG {
  
   private generatePDF: boolean;
   private imoveisNumb: number;
+  private startingPoint: number;
   private folderName: string;
   private dataSource: string;
 
-  constructor(generatePdf: boolean = true, imoveisNumb1: number = 2, folderName1: string = "imagesToClients", dataSource1: string = "apolar") {
+  constructor(generatePdf: boolean = true, imoveisNumb1: number = 2, startingPoint1: number = 0,
+    folderName1: string = "imagesToClients", dataSource1: string = "apolar") {
     // usage configurations
     this.generatePDF = generatePdf;
     this.imoveisNumb = imoveisNumb1;
+    this.startingPoint = startingPoint1;
     this.folderName = folderName1;
     this.dataSource = dataSource1;
   }
@@ -40,7 +43,9 @@ export default class JSONtoPNG {
 
   private normalizeApolarData = (obj: any, limit: number) => {
     let data: { [key: string]: { [key: string]: any } } = {};
-    for (let x=0; x< obj.conteudo.length && x < limit; x++) {
+    for (let x=this.startingPoint; //starts in starting point, goes until reaching end of array or (limit+startingPoint)
+      x< obj.conteudo.length && x < (limit+this.startingPoint); x++) {
+
       data.imovel[x] = {};
       data.imovel[x].fotoUrl = obj.conteudo[x].foto.url;
       data.imovel[x].descricao = obj.conteudo[x].descricao;
