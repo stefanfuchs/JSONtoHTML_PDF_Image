@@ -1,6 +1,9 @@
 let express = require('express');
 let app = express();
-let code = require('./JSONtoPNG.js');
+let code = require('./JSONtoPNG.ts');
+
+let inst = new code();
+inst.useLocalJson();
 
 app.get('/', function (req, res) {
   const filename = code.useRemoteJson(req.json);
