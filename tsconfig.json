@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "sourceMap": true,
+    "rootDir": "src",
+    "baseUrl": "./",
+    "paths": {
+      "@root/*": ["./*"],
+      "@src/*": ["./src/*"]
+    },
+    "outDir": "dist",
+    "lib": [
+      "esnext", "dom"
+    ],
+    "plugins": [
+      {
+        // "name": "ts-graphql-plugin"
+      }
+    ]
+  }
+}
