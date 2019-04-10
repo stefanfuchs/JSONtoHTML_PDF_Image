@@ -29,6 +29,9 @@ export default class JSONtoPNG {
   public setGeneratePdf = (bool: boolean) => {
     this.generatePDF = bool;
   }
+  public setStartingPoint = (nub: number) => {
+    this.startingPoint = nub;
+  }
 
   // data normalization function
   public normalizeData = (obj: any, limit: number) => {
@@ -43,6 +46,11 @@ export default class JSONtoPNG {
 
   private normalizeApolarData = (obj: any, limit: number) => {
     let data: { [key: string]: { [key: string]: any } } = {};
+
+    if (this.startingPoint >= obj.conteudo.length) { // check to see if data wont be empty
+      console.log("ERROR: JSONtoPNG.startinPoint >= " + this.dataSource + "(array).length!" );
+    }
+
     for (let x=this.startingPoint; //starts in starting point, goes until reaching end of array or (limit+startingPoint)
       x< obj.conteudo.length && x < (limit+this.startingPoint); x++) {
 
@@ -172,7 +180,9 @@ export default class JSONtoPNG {
 
 
   // high level functions (From JSON to HTML, PDF and PNG)
-  public useLocalJson = () => {
+  public useLocalJson = (start: number = this.startingPoint) => {
+  // defines starting point
+  this.setStartingPoint(start);
   // ensure dir
   this.ensureDirSync(this.folderName);
   // generates HTML using JSON file
@@ -184,7 +194,9 @@ export default class JSONtoPNG {
   this.htmlToImage(fileName, this.imoveisNumb);
   }
 
-  public useRemoteJson = (jsonFile: string) => {
+  public useRemoteJson = (jsonFile: string, start: number = this.startingPoint) => {
+  // defines starting point
+  this.setStartingPoint(start);
   // ensure dir
   this.ensureDirSync(this.folderName);
   // generates HTML using JSON file
