@@ -46,15 +46,15 @@ export default class JSONtoPNG {
     for (let x=this.startingPoint; //starts in starting point, goes until reaching end of array or (limit+startingPoint)
       x< obj.conteudo.length && x < (limit+this.startingPoint); x++) {
 
-      data.imovel[x] = {};
-      data.imovel[x].fotoUrl = obj.conteudo[x].foto.url;
-      data.imovel[x].descricao = obj.conteudo[x].descricao;
-      data.imovel[x].bairro = obj.conteudo[x].dadosImoveis.bairro;
-      data.imovel[x].endereco = obj.conteudo[x].dadosImoveis.Endereco;
-      data.imovel[x].qtdeDormitorios = obj.conteudo[x].qtdeDormitorios;
-      data.imovel[x].qtdeGaragem = obj.conteudo[x].qtdeGaragem;
-      data.imovel[x].metragem = obj.conteudo[x].metragem;
-      data.imovel[x].referencia = obj.conteudo[x].referencia;
+      data.imovel[(x-this.startingPoint)] = {};
+      data.imovel[(x-this.startingPoint)].fotoUrl = obj.conteudo[x].foto.url;
+      data.imovel[(x-this.startingPoint)].descricao = obj.conteudo[x].descricao;
+      data.imovel[(x-this.startingPoint)].bairro = obj.conteudo[x].dadosImoveis.bairro;
+      data.imovel[(x-this.startingPoint)].endereco = obj.conteudo[x].dadosImoveis.Endereco;
+      data.imovel[(x-this.startingPoint)].qtdeDormitorios = obj.conteudo[x].qtdeDormitorios;
+      data.imovel[(x-this.startingPoint)].qtdeGaragem = obj.conteudo[x].qtdeGaragem;
+      data.imovel[(x-this.startingPoint)].metragem = obj.conteudo[x].metragem;
+      data.imovel[(x-this.startingPoint)].referencia = obj.conteudo[x].referencia;
     }
     return data;
   }
