@@ -1,7 +1,7 @@
 {
-  "name": "htmltoimage",
+  "name": "jsontohtmlpdfpng",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJS application. Input data is JSON containing real state data. Output in HTML/CSS, PDF and PNG files",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
