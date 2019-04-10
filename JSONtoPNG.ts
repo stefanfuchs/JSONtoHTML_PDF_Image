@@ -131,7 +131,8 @@ export default class JSONtoPNG {
   }
 
   // PDF generation
-  private createPdf = (html: string, options, fileName: string) => {
+  private createPdf = (html: string, fileName: string) => {
+    let options = { format: 'Letter' };
     pdf.create(html, options).toFile('./'+this.folderName + '/'+fileName+'.pdf', function(err: Error) {
       if (err) return console.log(err);
       console.log("OK: " + fileName + ".pdf created!");
@@ -142,8 +143,7 @@ export default class JSONtoPNG {
   private htmlToPdf = (fileName: string) => {
     if ( this.generatePDF ) {
       let html = fs.readFileSync(this.folderName + '/'+fileName+".html", 'utf8');
-      let options = { format: 'Letter' };
-      return this.createPdf(html, options, fileName);
+      return this.createPdf(html, fileName);
     }
     return "pdf not generated";
   }
