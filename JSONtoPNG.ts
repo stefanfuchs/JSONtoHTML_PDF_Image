@@ -39,7 +39,7 @@ export default class JSONtoPNG {
   }
 
   private normalizeApolarData = (obj: any, limit: number) => {
-    let data = { imovel: {}};
+    let data: { [key: string]: { [key: string]: any } } = {};
     for (let x=0; x< obj.conteudo.length && x < limit; x++) {
       data.imovel[x] = {};
       data.imovel[x].fotoUrl = obj.conteudo[x].foto.url;
@@ -119,10 +119,10 @@ export default class JSONtoPNG {
 
   // PDF generation
   private createPdf = (html: string, options, fileName: string) => {
-    pdf.create(html, options).toFile('./'+this.folderName + '/'+fileName+'.pdf', function(err, res) {
+    pdf.create(html, options).toFile('./'+this.folderName + '/'+fileName+'.pdf', function(err: Error) {
       if (err) return console.log(err);
-      console.log("OK: " + res.filename + " created!");
-      return res.filename;
+      console.log("OK: " + fileName + ".pdf created!");
+      return fileName+".pdf";
     });
   }
 
@@ -179,7 +179,7 @@ export default class JSONtoPNG {
   this.htmlToImage(fileName, this.imoveisNumb);
   }
 
-  public useRemoteJson = (jsonFile) => {
+  public useRemoteJson = (jsonFile: string) => {
   // ensure dir
   this.ensureDirSync(this.folderName);
   // generates HTML using JSON file
