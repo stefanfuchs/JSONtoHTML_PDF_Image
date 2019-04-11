@@ -10,24 +10,25 @@ body {
   width: 500px;
   /* height: 500px; */
 
-  border: 1px solid red;
-  border-radius: 2px;
+  /* border: 1px solid red; */
+  border-radius: 5px;
   padding-bottom: 5px;
+  background: #f9f9f9;
 }
 
 
 
 .image-container {
   text-align: center;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 
-.image {
+.real-estate-image {
   max-width: 100%;
   max-height: 350px;
   border-radius: 5px 5px 0 0;
-  display: block;
+  /* display: block; */
 }
 
 div.description-container {
@@ -77,8 +78,6 @@ ul.features-list li:before {
   font-size: 0.8em;
 }
 
-.description-item {}
-
 .neighborhood-name {
   font-weight: bold;
   font-size: 1.3em;
@@ -92,4 +91,20 @@ ul.features-list li:before {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+div.logo-container {
+  text-align: center;
+}
+
+hr.hr-style-six {
+  width: 100%;
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.logo-image {
+  /* display:block; */
 }
