@@ -30,9 +30,15 @@ body {
   display: block;
 }
 
-.description-container {
+div.description-container {
   /* margin-top: 5px; */
   padding: 0px 10px;
+  display:flex;
+  flex-direction: row;
+}
+
+div.description-column {
+  width: 50%;
 }
 
 p, ul {
@@ -75,9 +81,15 @@ ul.features-list li:before {
 
 .neighborhood-name {
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 
 .address {
-  font-size: 0.8em;
+  font-size: 0.9em;
+}
+
+.flex-align-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
